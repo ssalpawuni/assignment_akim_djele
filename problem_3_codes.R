@@ -28,7 +28,7 @@ sapply(stock_prices, length) # checking lengths of downloaded RETURNs (i.e 120)
 ### Computing summary statistics
 ########################################################
 len = 120 # number of months from Jan 2010 to Jan 2021
-ones <- matrix(data = rep(1, len), ncol = 1) # matrix of ones
+ones <- matrix(data = 1, nrow = len) # matrix of ones
 mat.x <- sapply(stock_prices, unclass) # obtain matrix of 10 securities
 
 # mean vector
