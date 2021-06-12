@@ -12,6 +12,7 @@ library("zoo")
 ########################################################
 tickers <- c("AAPL", "MSFT", "AMZN", "GOOGL", "BRK-B",
              "JPM", "JNJ", "NVDA", "BAC", "PFE")
+wghts <- matrix(data = 1/10, nrow = 10) # random weights (random/tentative)
 
 stock_prices = list() # object to hold stock prices
 
@@ -34,9 +35,10 @@ mat.x <- sapply(stock_prices, unclass) # obtain matrix of 10 securities
 
 # Transformation (log returns of stock prices)
 mat.r <- apply(mat.x, 2, log)
+# lapply(X = stock_prices, FUN = function(x) diff(log(x))) log differencing
 
-# mean vector
-mu_cap <- 1/len * t(ones) %*% mat.r # mean returns across 10 securities
+# mean vector --- You may also use crossprod() ---
+mu_cap <- 1/len * t(mat.r) %*% ones # mean returns across 10 securities
 
 # mean matrix
 mu_mat <- matrix(data = mu_cap, ncol = 10, nrow = 120, byrow = TRUE)
@@ -55,7 +57,15 @@ var_cov <- 1/(len - 1) * t((mat.r - mu_mat)) %*% (mat.r - mu_mat)
 ## Method I (Lagrangian)
 
 ## Method II (Optimization)
+ons <- matrix(data = 1, nrow = 10, ncol = 1) # matrix of ones with dim = 10x1
+mat_A <- t(mu_cap) %*% var_cov^-1 %*% ons # Matrix A
+mat_B <- t(mu_cap) %*% var_cov^-1 %*% mu_cap # Matrix B
+mat_C <- t(ons) %*% var_cov^-1 %*% ons # matrix C
+mat_D <- mat_B %*% mat_C - mat_A %*% mat_A
 
+# TO BE CONTINUED ...
+
+# Code below not necessary ------------------------------------------------
 log(get.hist.quote(instrument = "AAPL", start = "2010-01-01",
                    end = "2020-01-01", quote = "AdjClose",
                    provider = "yahoo", origin = "2000-09-01",
