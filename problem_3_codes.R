@@ -4,6 +4,7 @@
 library("PerformanceAnalytics")
 library("tseries")
 library("zoo")
+library(tidyr)
 
 
 # TASK 1 ------------------------------------------------------------------
@@ -21,8 +22,10 @@ for(i in tickers){ # retrieve returns from Jan 2010 to Jan 2020
                                       end = "2020-01-01", quote = "AdjClose",
                                       provider = "yahoo", origin = "2000-09-01",
                                       compression = "m", retclass = "zoo")
+  
+  ticks = stock_prices$i
+  ticks = cbind(tick, i)
 }
-
 sapply(stock_prices, length) # checking lengths of downloaded RETURNs (i.e 120)
 
 # Transformation of stock prices (log differencing)
