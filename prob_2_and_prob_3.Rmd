@@ -242,9 +242,29 @@ efficient_portfolio(er = descript$mu_cap,
 #                      target_return = descript$mu_cap[x])})
 
 
+# Lagrangian method -------------------------------------------------------
+########################################################
+### Task 5: Lagrangian method (lambda1 and lambda2)
+########################################################
+markowitz = function(mu,cov_mat,er) {
+  A = t(ones) %*% solve(cov_mat) %*% mu
+  B = t(mu) %*% solve(cov_mat) %*% mu
+  C = t(ones) %*% solve(cov_mat) %*% ones
+  D = B*C - A^2
+  lam1 = (C*er-A)/D
+  lam2 = (B-A*er)/D
+  wts = lam1[1]*(solve(cov_mat) %*% mu) + lam2[1]*(solve(cov_mat) %*% ones)
+  g = (B[1]*(solve(cov_mat) %*% ones) - A[1]*(solve(cov_mat) %*% mu))/D[1]
+  h = (C[1]*(solve(cov_mat) %*% mu) - A[1]*(solve(cov_mat) %*% ones))/D[1]
+  wts = g + h*er
+}
+# output
+# Optimal portfolio weights: Assuming expected returns = c*, eg. AAPL
+(markowitz(mu = descript$mu_cap, cov_mat = descript$cov_mat, er = 0.0211))
+
 # Global Minimum variance (Resolution 2) ----------------------------------
 ########################################################
-### Task 5: Global minimum variance portfolio
+### Task 6: Global minimum variance portfolio
 ########################################################
 global_min_portfolio <- function(er, cov_mat){
   #
@@ -270,7 +290,7 @@ glmin$w_gmin
 
 # Compute efficient frontier ----------------------------------------------
 ########################################################
-### Task 6: Compute Markowitz bullet
+### Task 7: Compute Markowitz bullet
 ########################################################
 efficient_frontier <- function(er, cov_mat,
                                nport = N, alpha_min = -0.5,
