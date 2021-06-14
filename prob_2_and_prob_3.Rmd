@@ -258,7 +258,7 @@ markowitz = function(mu,cov_mat,er) {
   h = (C[1]*(solve(cov_mat) %*% mu) - A[1]*(solve(cov_mat) %*% ones))/D[1]
   wts = g + h*er
 }
-# output
+# output (computed for only one of the 10 portfolios)
 # Optimal portfolio weights: Assuming expected returns = c*, eg. AAPL
 (markowitz(mu = descript$mu_cap, cov_mat = descript$cov_mat, er = 0.0211))
 
