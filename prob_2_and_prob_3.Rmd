@@ -139,7 +139,7 @@ descript$weights
 
 # Get Portfolio -----------------------------------------------------------
 ########################################################
-### Task 3: Create a portfolio object
+### TASK 3: Create a portfolio object
 ########################################################
 get_portfolio <-function(er, cov_mat, weights){
   
@@ -180,7 +180,7 @@ get_port$weights
 
 # Efficient portfolio (Resolution 1) --------------------------------------
 ########################################################
-### Task 4: Compute minimum variance portfolio
+### TASK 4: Compute minimum variance portfolio
 ########################################################
 
 # NB: in this section, target return, c* = mu_cap for the ith return
@@ -244,7 +244,7 @@ efficient_portfolio(er = descript$mu_cap,
 
 # Lagrangian method -------------------------------------------------------
 ########################################################
-### Task 5: Lagrangian method (lambda1 and lambda2)
+### TASK 5: Lagrangian method (lambda1 and lambda2)
 ########################################################
 markowitz = function(mu,cov_mat,er) {
   A = t(ones) %*% solve(cov_mat) %*% mu
@@ -264,7 +264,7 @@ markowitz = function(mu,cov_mat,er) {
 
 # Global Minimum variance (Resolution 2) ----------------------------------
 ########################################################
-### Task 6: Global minimum variance portfolio
+### TASK 6: Global minimum variance portfolio
 ########################################################
 global_min_portfolio <- function(er, cov_mat){
   #
@@ -290,7 +290,7 @@ glmin$w_gmin
 
 # Compute efficient frontier ----------------------------------------------
 ########################################################
-### Task 7: Compute Markowitz bullet
+### TASK 7: Compute Markowitz bullet
 ########################################################
 efficient_frontier <- function(er, cov_mat,
                                nport = N, alpha_min = -0.5,
@@ -338,6 +338,26 @@ efficient_frontier(er = descript$mu_cap,
                    alpha_min = -0.5,
                    alpha_max = 1.5)
 ########################  THE END  ##############################
+```
+
+## Extraneous: Obtain S&P500 tickers (symbols)
+```{r ticker-code, warning=FALSE, message=FALSE}
+### Get S&P500 stickers
+# Approach I
+library(BatchGetSymbols)
+
+sp500 <- GetSP500Stocks()
+head(sp500$Tickers, 8)
+
+# Approach II
+library(rvest)
+url <- "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+SP500 <- url %>%
+  read_html() %>%
+  html_nodes(xpath='//*[@id="mw-content-text"]/div/table[1]') %>%
+  html_table()
+SP500 <- SP500[[1]]
+head(SP500$Symbol, 8)
 ```
 
 
