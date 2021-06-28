@@ -248,9 +248,8 @@ efficient_frontier(er = descript$mu_cap,
 ########################################################
 ###                    THE END                       ###
 ########################################################
-<<<<<<< HEAD
-# Lagrangian not included
-=======
+
+
 ### Lagrangian method
 markowitz = function(mu,cov_mat,er) {
   A = t(ones) %*% solve(cov_mat) %*% mu
@@ -267,5 +266,4 @@ markowitz = function(mu,cov_mat,er) {
 
 # Optimal portfolio weights: Assuming expected returns = c*
 (markowitz(mu = descript$mu_cap, cov_mat = descript$cov_mat, er = 0.0211))
->>>>>>> eee47695211c90d400746af02123d698e17d21dd
 
